@@ -1,0 +1,135 @@
+body {
+    font-family : Arial;
+    font-size : 14px;
+}
+
+.page-title {
+    font-size:24px; 
+	font-weight:bold;
+}
+
+.cart-header {
+	/*background-color: #0040FF;*/
+	background-color: #017CA7;
+	color: white;
+}
+
+.bg-custom {
+	background-color:darkcyan;
+}
+
+input, textarea {
+	color:darkcyan !important;
+}
+
+input:focus, input:hover, textarea:focus, textarea:hover{
+	background-color: rgb(218, 246, 255) !important;
+}
+
+
+
+#loginBtn{
+	width: 100%;
+	display: block;
+	background-color: darkcyan;
+	color: white;
+	font-weight: bold;
+	border: 0;
+	padding: 6px 12px;
+	margin-top: 10px;
+	border-radius: 0.25rem;
+	transition: background-color 0.25s;
+
+}
+
+#loginBtn:hover{
+	background-color:darkturquoise;
+	transition: background-color 0.25s;
+}
+
+#searchBox{
+	padding-right: 0px !important;
+}
+
+#searchBtnCol{
+	padding:0px;
+	margin: 0px;
+	padding-right:25px;
+	
+}
+
+#keywords{
+	border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+#searchBtn{
+	height: calc(1.5em + 0.75rem + 5px);
+	width: 100%;
+	display: block;
+	background-color: darkcyan;
+	color: white;
+	font-weight: bold;
+	border: 0;
+	padding: 6px 12px;
+	margin-top: 0px;
+	margin-left:0px;
+	border-radius: 0 0.25rem 0.25rem 0;
+	transition: background-color 0.25s;
+
+}
+
+#searchBtn:hover{
+	background-color:darkturquoise;
+	transition: background-color 0.25s;
+}
+
+@media only screen and (max-width: 575px) {
+	#searchBtnCol{
+		margin: 0px;
+		padding: 0px 15px;
+	}
+
+	#searchBtn{
+		height: calc(1.5em + 0.75rem + 5px);
+		width: 100%;
+		display: block;
+		background-color: darkcyan;
+		color: white;
+		font-weight: bold;
+		border: 0;
+		padding: 6px 12px;
+		margin-top: 10px;
+		border-radius: 0.25rem;
+	}
+
+	#searchBox{
+		padding: 0px 15px !important;
+	}
+
+	#keywords{
+		border-radius: 0.25rem !important;
+	}
+}
+
+
+#forgotPw{
+	text-decoration:none;
+	color: darkcyan;
+	font-weight: bold;
+	border: 0;
+	margin-top: 10px;
+	border-radius: 0.25rem;
+	transition: color 0.25s;
+
+}
+
+#forgotPw:hover{
+	color:darkturquoise;
+	transition: color 0.25s;
+}
+
+#trashcan:hover{
+	filter: opacity(50%);
+	transition: filter 0.25s;
+
+}
