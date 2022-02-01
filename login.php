@@ -27,7 +27,7 @@
         <!-- 3rd row - Entry of password -->
         <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="password">
-                Password:
+                Password: 
             </label>
             <div class="col-sm-9">
                 <input class="form-control" type="password"

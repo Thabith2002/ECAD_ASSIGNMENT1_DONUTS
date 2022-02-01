@@ -51,6 +51,14 @@ function validateForm()
         </div>
     </div>
     <div class="form-group row">
+        <label class="col-sm-3 col-form-label" for="DOB">
+            Date of birth:</label>
+        <div class="col-sm-9">
+            <input class="form-control" name="DOB" id="DOB" 
+                   type="date" required /> <p style="color:red;">(required)</p>
+        </div>
+    </div>
+    <div class="form-group row">
         <label class="col-sm-3 col-form-label" for="address">Address:</label>
         <div class="col-sm-9">
             <textarea class="form-control" name="address" id="address"
@@ -93,6 +101,29 @@ function validateForm()
                    type="password" required /> <p style="color:red;">(required)</p>
         </div>
     </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" for="securityqns">
+            Select a Security Question:</label>
+        <div class="col-sm-9">
+            <select class="form-control" name="securityqns" id="securityqns" required>
+                <option value="Which polytechnic?">Which Polytechnic did you graduate from?</option>
+                <option value="wife's name?">What is your wife's first name?</option>
+                <option value="How many brothers and sisters?">How many Brothers and Sisters do you have?</option>
+                <option value="What was your first car?">What was your first car?</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" for="securityans">
+            Security Answer:</label>
+        <div class="col-sm-9">
+            <input class="form-control" name="securityans" id="securityans" 
+                   type="text" required /> <p style="color:red;">(required)</p>
+        </div>
+    </div>
+
+
     <div class="form-group row">       
         <div class="col-sm-9 offset-sm-3">
             <button id="loginBtn" type="submit">Register</button>
