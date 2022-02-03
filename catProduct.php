@@ -35,11 +35,13 @@ while ($row = $result->fetch_array()){
 	//Left column - display a text link showing the product's name,
 	//				display the selling price in red in a new paragraph
 	$product = "productDetails.php?pid=$row[ProductID]";
+	$productRanking = "productRanking.php?pid=$row[ProductID]";
 	$formattedPrice = number_format($row["Price"], 2);
 	echo "<div class='col-8'>";//67% of row width
 	echo "<p><a id='forgotPw' href=$product>$row[ProductTitle]</a></p>";
 	echo "Price:<span style='font-weight:bold; color:red;'>
 		  S$ $formattedPrice</span>";
+	echo "<p><a id='Ranking' href=$productRanking ><button>View Ranking</button></p>";
 	echo "</div>";
 
 	//Right Column - display the product's image

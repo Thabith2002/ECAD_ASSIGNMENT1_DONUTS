@@ -15,7 +15,8 @@ if(isset($_SESSION["ShopperName"])) {
     $content2= "<li class='nav-item'>
                 <a class='nav-link' href='updateAccount.php'>Update Account</a></li>
                 <li class='nav-item'>
-                <a class='nav-link' href='logout.php'>Logout</a></li>";              
+                <a class='nav-link' href='logout.php'>Logout</a></li>"; 
+    
 	//To Do 2 (Practical 4) - 
     //Display number of item in cart
 	if (isset($_SESSION["NumCartItem"])){
@@ -53,6 +54,7 @@ if(isset($_SESSION["ShopperName"])) {
                  <li class="nav-item">
                      <a class="nav-link" href="shoppingCart.php">Shopping Cart</a>
                  </li>
+
              </ul>
 
             <ul class="navbar-nav ml auto">
