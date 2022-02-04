@@ -64,8 +64,10 @@ while ($row = $result->fetch_array()){
         $stmt->execute();
         $average_ranking_result = $stmt->get_result();
         $stmt->close();
+        
         while ($row3 = $average_ranking_result->fetch_array()){
-            echo "<p><strong>Average Donut Ranking: $row3[AvgRank]</strong></p>";
+            $formattedRank =  number_format($row3["AvgRank"], 2);
+            echo "<p><strong>Average Donut Ranking: $formattedRank out of 5.00</strong></p>";
         }
 
     }else{

@@ -4,6 +4,7 @@ session_start();
 // Include the Page Layout header
 include("header.php"); 
 ?>
+
 <script type="text/javascript">
 function validateForm()
 {
