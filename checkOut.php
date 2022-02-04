@@ -1,7 +1,6 @@
 <?php 
-// Include the code that contains shopping cart's functions.
-// Current session is detected in "cartFunctions.php, hence need not start session here.
-include_once("cartFunctions.php");
+session_start(); // Detect the current session
+
 include("header.php"); // Include the Page Layout header
 
 if (! isset($_SESSION["ShopperID"])) { // Check if user logged in 
@@ -26,7 +25,7 @@ if (isset($_SESSION["Cart"])) {
 	if ($result->num_rows > 0) {
 		// To Do 2 (Practical 4): Format and display 
 		// the page header and header row of shopping cart page
-		echo "<p class='page-title' style='text-align:center'>Shopping Cart</p>"; 
+		echo "<p class='page-title' style='text-align:center'>Check Out</p>"; 
 		echo "<div class='table-responsive' >"; // Bootstrap responsive table
 		echo "<table class='table table-hover'>"; // Start of table
 		echo "<thead class='cart-header'>"; // Start of table's header section
@@ -97,7 +96,10 @@ if (isset($_SESSION["Cart"])) {
 		$_SESSION["SubTotal"] = round($subTotal,2);
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page
-		echo "<p><a id='Ranking' href='checkOut.php' ><button>Check Out</button></p>";
+		echo "<form method='post' action='checkoutProcess.php'>";	
+		echo "<input type='image' style='float:right;'
+					 src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'>";	
+		echo "</form></p>";
 	}
 	else {
 		echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";
