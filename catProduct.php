@@ -41,7 +41,7 @@ while ($row = $result->fetch_array()){
 	echo "<p><a id='forgotPw' href=$product>$row[ProductTitle]</a></p>";
 	echo "Price:<span style='font-weight:bold; color:red;'>
 		  S$ $formattedPrice</span>";
-	echo "<p><a id='Ranking' href=$productRanking ><button>View Ranking</button></p>";
+	echo "<p><a id='Ranking' href=$productRanking ><button>View Ranking</button></a></p>";
 	echo "</div>";
 
 	//Right Column - display the product's image

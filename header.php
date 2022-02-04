@@ -12,6 +12,8 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- Site specific Cascading Stylesheet -->
         <link rel="stylesheet" href="css/site.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
     </head>
     <body>
         <div class="container">

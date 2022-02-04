@@ -11,6 +11,12 @@ if (isset($_POST['action'])) {
 		case 'remove':
             removeItem();
             break;
+		case 'delivery':
+			deliveryMode();
+			break;
+		case 'time':
+			deliveryTime();
+			break;
     }
 }
 
@@ -82,6 +88,8 @@ function addItem() {
 	exit;
 }
 
+
+
 function updateItem() {
 	// Check if shopping cart exists 
 	if (! isset($_SESSION["Cart"])) {
@@ -134,4 +142,58 @@ function removeItem() {
 	header("Location: shoppingCart.php");
 	exit;
 }		
+
+function deliveryMode() {
+	if (! isset($_SESSION["Cart"])) {
+		// redirect to login page if the session variable cart is not set
+		header ("Location: login.php");
+		exit;
+	}
+	$deliveryMode = $_POST["deliveryMode"];
+	$_SESSION["DeliveryMode"] = $deliveryMode;
+
+	if($deliveryMode=='Normal'){
+		$_SESSION["DeliveryPrice"] = 2;
+	}
+	elseif($deliveryMode=='Express'){
+		$_SESSION["DeliveryPrice"] = 5;
+	}
+	else{
+		$_SESSION["DeliveryPrice"] = 0;
+
+	};
+
+	header("Location: checkOut.php");
+	exit;
+}
+
+function deliveryTime() {
+	if (! isset($_SESSION["Cart"])) {
+		// redirect to login page if the session variable cart is not set
+		header ("Location: login.php");
+		exit;
+	}
+
+	$deliveryTime = $_POST["deliveryTime"];
+	$_SESSION["DeliveryTime"] = $deliveryTime;
+
+	if($deliveryTime=='Nine'){
+		$_SESSION["DeliveryTime"] = '9am - 12 noon';
+	}
+	elseif($deliveryTime=='Twelve'){
+		$_SESSION["DeliveryTime"] = '12 noon - 3pm';
+	}
+	elseif($deliveryTime=='Three'){
+		$_SESSION["DeliveryTime"] = '3pm - 6pm';
+	}
+	else{
+		$_SESSION["DeliveryTime"] = '';
+
+	};
+
+	header("Location: checkOut.php");
+	exit;
+}
+
+
 ?>

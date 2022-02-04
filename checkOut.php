@@ -1,5 +1,5 @@
 <?php 
-session_start(); // Detect the current session
+session_start();
 
 include("header.php"); // Include the Page Layout header
 
@@ -9,103 +9,179 @@ if (! isset($_SESSION["ShopperID"])) { // Check if user logged in
 	exit;
 }
 
+
+
 echo "<div id='myShopCart' style='margin:auto'>"; // Start a container
-if (isset($_SESSION["Cart"])) {
+if (isset($_SESSION["Items"])) {
 	include_once("mysql_conn.php");
 	// To Do 1 (Practical 4): 
 	// Retrieve from database and display shopping cart in a table
-	$qry = "SELECT *, (Price*Quantity) AS Total
-			FROM ShopCartItem WHERE ShopCartID=?";
+	echo "<p class='page-title' style='text-align:center'>Checkout</p>"; 
+	echo "<p>Total Number of Donutted Donuts : --ANDERSON--</p>"; 
+		
+	$qry = "SELECT TaxRate FROM gst WHERE EffectiveDate=(SELECT MAX(EffectiveDate) FROM `gst` WHERE EffectiveDate < CURRENT_DATE)";
 	$stmt = $conn->prepare($qry);
-	$stmt->bind_param("i", $_SESSION["Cart"]); // 'i' - integer
 	$stmt->execute();
 	$result = $stmt->get_result();
 	$stmt->close();
+	while ($row = $result->fetch_array()){
+		$_SESSION['Tax'] = $row['TaxRate'];
+	}
+
+	echo "<div class='card' style='width:30%; float:right'>
+	<p>Total: $_SESSION[SubTotal] </p>";
 	
-	if ($result->num_rows > 0) {
-		// To Do 2 (Practical 4): Format and display 
-		// the page header and header row of shopping cart page
-		echo "<p class='page-title' style='text-align:center'>Check Out</p>"; 
-		echo "<div class='table-responsive' >"; // Bootstrap responsive table
-		echo "<table class='table table-hover'>"; // Start of table
-		echo "<thead class='cart-header'>"; // Start of table's header section
-		echo "<tr>"; // Start of header row
-		echo "<th width='250px'>Item</th>";
-		echo "<th width='90px'>Price (S$)</th>";
-		echo "<th width='60px'>Quantity</th>";
-		echo "<th width='120px'>Total (S$)</th>";
-		echo "<th>&nbsp;</th>";
-		echo "</tr>"; // End of header row
-		echo "</thead>"; //End of table's header section
-		// To Do 5 (Practical 5):
-		// Declare an array to store the shopping cart items in session variable 
-		$_SESSION["Items"]=array();	
-		// To Do 3 (Practical 4): 
-		// Display the shopping cart content
-		$subTotal = 0; // Declare a variable to compute subtotal before tax
-		echo "<tbody>"; // Start of table's body section
-		while ($row = $result->fetch_array()) {
-			echo "<tr>";
-			echo "<td style='width:50%'>$row[Name]<br />";
-			echo "Product ID: $row[ProductID]</td>";
-			$formattedPrice = number_format($row["Price"], 2);
-			echo "<td>$formattedPrice</td>";
-			echo "<td>"; // Column for update quantity of purchase
-			echo "<form action='cartFunctions.php' method='post'>";
-			echo "<select name='quantity' onChange='this.form.submit()'>";
-			for ($i = 1; $i <= 10; $i++) { // to populate drop-down list from 1 to 10
-				if($i == $row["Quantity"])
-					// Select drop-down list with value as same as the quantity of purchase
-					$selected = "selected";
-				else
-					$selected = ""; // no specific item is selected
-				echo "<option value='$i' $selected>$i</option>";
-			}
-			echo "</select>";
-			echo "<input type='hidden' name='action' value='update' />";
-			echo "<input type='hidden' name='product_id' value='$row[ProductID]'  />";
-			echo "</form>";
-			echo "</td>";
-			$formattedTotal = number_format($row["Total"], 2);
-			echo "<td>$formattedTotal</td>";
-			echo "<td>"; //Column for remove item from shopping cart
-			echo "<form action='cartFunctions.php' method='post'>";
-			echo "<input type='hidden' name='action' value='remove' />";
-			echo "<input type='hidden' name='product_id' value='$row[ProductID]' />";
-			echo "<input type='image' id='trashcan' src='images/trash-can.png' title='Remove Item' />";
-			echo "</form>";
-			echo "</td>";
-			echo "</tr>";
-			// To Do 6 (Practical 5):
-		    // Store the shopping cart items in session variable as an associate array
-			$_SESSION["Items"][]=array("productId"=>$row["ProductID"],
-										"name"=>$row["Name"],
-										"price"=>$row["Price"],
-										"quantity"=>$row["Quantity"]);	
-			// Accumulate the running sub-total
-			$subTotal += $row["Total"];
+
+	date_default_timezone_set('Asia/Singapore');
+
+	$todaysDate = new DateTime('now');
+
+	if($_SESSION['DeliveryMode']=='Normal'){
+		$Normal = "checked";
+		$todaysDate ->add(new DateInterval('P1D'));
+
+	}
+	else{
+		$Normal = "";
+	}
+
+	if($_SESSION['DeliveryMode']=='Express'){
+		$Express = "checked";
+		$todaysDate ->add(new DateInterval('PT2H'));
+	}
+	else{
+		$Express = "";
+
+	}
+
+	echo "
+	<p> Delivery Type </p>
+	<form action='cartFunctions.php' method='post'>
+
+	<input type='radio' id='deliveryN' name='deliveryMode' value='Normal' onChange='this.form.submit()' $Normal>
+	<label for='deliveryN'>Normal</label><br>
+	<input type='radio' id='deliveryE' name='deliveryMode' value='Express' onChange='this.form.submit()' $Express>
+	<label for='deliveryE'>Express</label><br>
+	<input type='hidden' name='action' value='delivery' />
+
+	</form>";
+
+	if($_SESSION["DeliveryTime"] == '9am - 12 noon'){
+		$Nine = "checked";
+	}
+	else{
+		$Nine = "";
+
+	}
+
+	if($_SESSION["DeliveryTime"] == '12 noon - 3pm'){
+		$Twelve = "checked";
+	}
+	else{
+		$Twelve = "";
+
+	}
+
+	if($_SESSION["DeliveryTime"] == '3pm - 6pm'){
+		$Three = "checked";
+	}
+	else{
+		$Three = "";
+
+	}
+
+
+	echo "
+	<p> Delivery Time </p>
+	<form action='cartFunctions.php' method='post'>
+
+	<input type='radio' id='deliveryNine' name='deliveryTime' value='Nine' onChange='this.form.submit()' $Nine>
+	<label for='deliveryNine'>9 am - 12 Noon</label><br>
+	<input type='radio' id='deliveryTwelve' name='deliveryTime' value='Twelve' onChange='this.form.submit()' $Twelve>
+	<label for='deliveryTwelve'>12 Noon - 3 pm</label><br>
+	<input type='radio' id='deliveryThree' name='deliveryTime' value='Three' onChange='this.form.submit()' $Three>
+	<label for='deliveryTwelve'>3 pm - 6 pm</label><br>
+	<input type='hidden' name='action' value='time' />
+
+	</form>";
+
+	$formattedPrice = number_format($_SESSION['DeliveryPrice'], 2);
+
+	if ($SESSION['IsWaived']==true && $_SESSION['DeliveryMode']=='Normal'){
+		$TotalPayment = $_SESSION['SubTotal'];
+	}
+	else{
+		$TotalPayment = ($_SESSION['SubTotal'] + $_SESSION['DeliveryPrice']);
+	}
+
+
+	$GST = ($TotalPayment/100) * $_SESSION['Tax'];
+
+	$formattedGST = number_format($GST, 2);
+
+	$TotalPaymentWGST = number_format($TotalPayment + $GST, 2);
+
+
+	$Date = $todaysDate->format('d/m/y');
+
+
+	echo "
+	<p>Delivery Price: $$formattedPrice </p>
+	<p>GST: S$formattedGST ($_SESSION[Tax]%)</p>	
+	<p>Total Payment: $$TotalPaymentWGST</p> 
+	<p>Estimated Delivery Date: $Date </p>
+	<p>Time Slot: $_SESSION[DeliveryTime]</p>
+	<label for='msgBox'>Message:</label>
+	<textarea id='msgBox' rows'4' cols'50' placeholder='Write a message and we will deliver it!' style='font-family:Arial'></textarea>
+	
+	<form method='post' action='checkoutProcess.php'>
+		<input type='image' style=';' src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'>
+	</form>
+
+	<p><a href='shoppingCart.php' ><button>Back to Cart</button></a></p>
+	</div>";
+	
+
+
+	foreach($_SESSION['Items'] as $key=>$item){
+		$qry = "SELECT ProductImage FROM Product WHERE ProductID=$item[productId]";
+		$stmt = $conn->prepare($qry);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$stmt->close();
+
+		$formattedPrice = number_format($item['price'], 2);
+
+		while ($row = $result->fetch_array()){
+			
+			$img = "./Images/products/$row[ProductImage]";
+			
 		}
-		echo "</tbody>"; // End of table's body section
-		echo "</table>"; // End of table
-		echo "</div>"; // End of Bootstrap responsive table	
-		// To Do 4 (Practical 4): 
-		// Display the subtotal at the end of the shopping cart
-		echo "<hr style='border: none; border-top: 1px solid black;'/>";
-		echo "<p style='text-align:right; font-size:20px; color:darkcyan; font-weight:bold;'>
-			Subtotal = S$". number_format($subTotal,2);
-		$_SESSION["SubTotal"] = round($subTotal,2);
-		// To Do 7 (Practical 5):
-		// Add PayPal Checkout button on the shopping cart page
-		echo "<form method='post' action='checkoutProcess.php'>";	
-		echo "<input type='image' style='float:right;'
-					 src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'>";	
-		echo "</form></p>";
-	}
-	else {
-		echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";
-	}
+		echo "<div class='card' style='width:60%; float:left''>
+					<div class='row'>
+						<div class='col-sm-3' style='display: flex; align-items: center;'>
+							<img src=$img style='width:100%; margin:10px;'/>
+						</div>	
+						<div class='col-sm-9'>
+							<h4 style='margin-top:10px;'>$item[name]</h4>
+							<span>Product ID: $item[productId]</span>
+							<p>Price: $$formattedPrice</p>
+							<p>Quantity: $item[quantity]</p>
+						</div>
+					</div>
+				</div>";
+
+	} 
+
+
+
+		
+
 	$conn->close(); // Close database connection
+
 }
+	
+
 else {
 	echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";
 }
