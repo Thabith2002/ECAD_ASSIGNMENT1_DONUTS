@@ -95,11 +95,9 @@ if (isset($_SESSION["Cart"])) {
 		echo "<p style='text-align:right; font-size:20px; color:darkcyan; font-weight:bold;'>
 			Subtotal = S$". number_format($subTotal,2);
 			$_SESSION["SubTotal"] = round($subTotal,2) ;
-			$SESSION['IsWaived']=false;
+			$_SESSION['IsWaived']=false;
 
-			$_SESSION["DeliveryMode"] = 'Normal';
-			$_SESSION["DeliveryPrice"] = 2;
-			$_SESSION["DeliveryTime"] = '9am - 12 noon';
+			
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page
 		echo "<p><a id='Ranking' href='checkOut.php' ><button>Check Out</button></a></p>";

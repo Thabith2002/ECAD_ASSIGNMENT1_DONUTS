@@ -10,10 +10,21 @@ if (! isset($_SESSION["ShopperID"])) { // Check if user logged in
 }
 
 
-
 echo "<div id='myShopCart' style='margin:auto'>"; // Start a container
 if (isset($_SESSION["Items"])) {
 	include_once("mysql_conn.php");
+
+	if(! isset($_SESSION["DeliveryMode"])){
+		$_SESSION["DeliveryMode"] = 'Normal';
+	}
+	if(! isset($_SESSION["DeliveryPrice"])){
+		$_SESSION["DeliveryPrice"] = 2;
+	}
+	if(!isset($_SESSION["DeliveryTime"])){
+		$_SESSION["DeliveryTime"] = '9am - 12 noon';
+	}
+
+
 	// To Do 1 (Practical 4): 
 	// Retrieve from database and display shopping cart in a table
 	echo "<p class='page-title' style='text-align:center'>Checkout</p>"; 
@@ -107,7 +118,7 @@ if (isset($_SESSION["Items"])) {
 
 	$formattedPrice = number_format($_SESSION['DeliveryPrice'], 2);
 
-	if ($SESSION['IsWaived']==true && $_SESSION['DeliveryMode']=='Normal'){
+	if ($_SESSION['IsWaived']==true && $_SESSION['DeliveryMode']=='Normal'){
 		$TotalPayment = $_SESSION['SubTotal'];
 	}
 	else{
