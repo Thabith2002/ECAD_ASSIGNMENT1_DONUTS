@@ -9,7 +9,7 @@ include("header.php"); // Include the Page Layout header
 $pid=$_GET["pid"]; // Read Product ID from query string
 
 // Include the PHP file that establishes database connection handle: $conn
-include_once("mysql_conn.php"); 
+include_once("mysql_conn.php");
 $qry = "SELECT * from product where ProductID=?";
 $stmt = $conn->prepare($qry);
 $stmt->bind_param("i", $pid); 	// "i" - integer 
@@ -24,6 +24,16 @@ while ($row = $result->fetch_array()){
     echo "<div class='row' >";
     echo "<div class='col-sm-12' style='padding:5px' >";
     echo "<span class='page-title'>$row[ProductTitle]</span>";
+
+    $offer = $row["Offered"];
+    $offerStart = $row["OfferStartDate"];
+	$offerEnd = $row["OfferEndDate"];
+	$todayDate = date("Y-m-d");
+    if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If the offer time period is within range of today's date
+		echo "<button id='loginBtn' style='background:#ffac47; width:10%; border-radius:70px;' disabled>On Offer</button>";
+		echo "</br>";
+    }
+
     echo "</div>";
     echo "</div>";
 
@@ -34,11 +44,11 @@ while ($row = $result->fetch_array()){
     echo "<p>$row[ProductDesc]</p>";
 
     //Left column - display a product's specifications,
-    $qry = "SELECT s.SpecName, ps.SpecVal from productspec ps
+    $qry2 = "SELECT s.SpecName, ps.SpecVal from productspec ps
             INNER JOIN specification s ON ps.SpecID=s.SpecID
             WHERE ps.ProductID=?
             ORDER BY ps.priority";
-    $stmt = $conn->prepare($qry);
+    $stmt = $conn->prepare($qry2);
     $stmt->bind_param("i", $pid); //"i" - integer
     $stmt->execute();
     $result2 = $stmt->get_result();
@@ -55,21 +65,51 @@ while ($row = $result->fetch_array()){
 
     //Right Column - Display the product's price
     $formattedPrice = number_format($row["Price"], 2);
-    echo "Price:<span style='font-weight:bold; color:red;'>
-        S$ $formattedPrice</span>";
+    $offerPrice = number_format($row["OfferedPrice"], 2);
+	$offer = $row["Offered"];
+	$offerStart = $row["OfferStartDate"];
+	$offerEnd = $row["OfferEndDate"];
+	$todayDate = date("Y-m-d");
+	$discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
+
+    if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) {
+    echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
+		  S$ $formattedPrice</span> $discountPercent% Off</p>";
+    echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
+    S$ $offerPrice</span>";
+    }
+    else {
+		echo "<p>Price:<span style='font-weight:bold; color:red;'>
+		  S$ $formattedPrice</span>";
+	}
+    
+    echo "<form action='cartFunctions.php' method='post'>";
+    echo "<input type='hidden' name='action' value='add' />";
+    echo "<input type='hidden' name='product_id' value='$pid' />";
+    echo "Quantity: <input type='number' name='quantity' value='1'
+                    min='1' max='10' style='width:40px' required />";
+    $quantity = $row["Quantity"];
+    $name = $row["ProductTitle"];
+    //check for sufficient quantity
+    if($quantity <= 0){
+        echo "<button id='loginBtn' style='background:red;' type='submit' disabled>Add to Cart</button>";
+        echo "<p style='color:red; font-weight: bold;'>$name is currently out of stock!<br />";
+    }
+    else {
+        echo "<button id='loginBtn' type='submit'>Add to Cart</button>";
+    }
+    
+    echo "</form>";
+    
 }
 // To Do 1:  Ending ....
 
 // To Do 2:  Create a Form for adding the product to shopping cart. Starting ....
-echo "<form action='cartFunctions.php' method='post'>";
-echo "<input type='hidden' name='action' value='add' />";
-echo "<input type='hidden' name='product_id' value='$pid' />";
-echo "Quantity: <input type='number' name='quantity' value='1'
-                min='1' max='10' style='width:40px' required />";
-echo "<button id='loginBtn' type='submit'>Add to Cart</button>";
-echo "</form>";
+
+
 echo "</div>"; // End of right column
 echo "</div>"; // End of row
+
 // To Do 2:  Ending ....
 
 $conn->close(); // Close database connnection

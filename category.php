@@ -17,7 +17,7 @@ include("header.php"); // Include the Page Layout header
 include_once("mysql_conn.php");
 
 // To Do:  Starting ....
-$qry = "SELECT * FROM Category";
+$qry = "SELECT * FROM Category ORDER BY CatName"; // Order by Alphabetical Order of Category Name
 $result = $conn->query($qry);
 
 //Display Category in each row
@@ -29,7 +29,7 @@ while ($row = $result->fetch_array()) {
     $catname = urlencode($row["CatName"]);
     $catproduct = "catProduct.php?cid=$row[CategoryID]&catName=$catname";
     echo "<div class='col-8'>"; //67% of row width
-    echo "<p><a id='forgotPw' href=$catproduct>$row[CatName]</a></p>";
+    echo "<p><a id='forgotPw' href=$catproduct>$row[CatName]s</a></p>";
     echo "$row[CatDesc]";
     echo "</div>";
 
