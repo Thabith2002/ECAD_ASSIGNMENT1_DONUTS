@@ -78,10 +78,10 @@ function addItem() {
   	$conn->close();
   	// Update session variable used for counting number of items in the shopping cart.
 	if (isset($_SESSION["NumCartItem"])){
-		$_SESSION["NumCartItem"] = $_SESSION["NumCartItem"] + $addNewItem;
+		$_SESSION["NumCartItem"] = $_SESSION["NumCartItem"] + $quantity;
 	}
 	else{
-		$_SESSION["NumCartItem"] = 1;
+		$_SESSION["NumCartItem"] = $quantity;
 	}
 	// Redirect shopper to shopping cart page
 	header ("Location: shoppingCart.php");
@@ -104,12 +104,22 @@ function updateItem() {
 	$pid = $_POST["product_id"];
 	$quantity = $_POST["quantity"];
 	include_once("mysql_conn.php"); //Establish database connection handle: $conn
-	$qry = "UPDATE ShopCartItem SET Quantity=? WHERE ProductID=? AND ShopCartID=?";
-	$stmt = $conn->prepare($qry);
+	$qry2 = "UPDATE ShopCartItem SET Quantity=? WHERE ProductID=? AND ShopCartID=?";
+	$stmt = $conn->prepare($qry2);
 	$stmt->bind_param("iii", $quantity, $pid, $cartid); //"iii" - 3 integers
 	$stmt->execute();
 	$stmt->close();
+
+	// Update session variable used for counting number of items in the shopping cart.
+	$qry1 = "SELECT SUM(Quantity) AS 'NumCartItem' FROM shopcartitem WHERE ShopCartID = $cartid; ";
+	$count = $conn->query($qry1); //The result of the query
+	if ($count->num_rows > 0){ //Check if query returns any rows
+		while ($row = $count->fetch_array()){
+			$_SESSION["NumCartItem"] = $row["NumCartItem"];
+			}
+		}
 	$conn->close();
+	
 	header("Location: shoppingCart.php");
 	exit;
 }
@@ -126,19 +136,22 @@ function removeItem() {
 	$cartid = $_SESSION["Cart"];
 	$pid = $_POST["product_id"];
 	include_once("mysql_conn.php"); //Establish database connection handle: $conn
-	$qry = "DELETE FROM ShopCartItem  WHERE ProductID=? AND ShopCartID=?";
-	$stmt = $conn->prepare($qry);
+	$qry2 = "DELETE FROM ShopCartItem  WHERE ProductID=? AND ShopCartID=?";
+	$stmt = $conn->prepare($qry2);
 	$stmt->bind_param("ii", $pid, $cartid); //"iii" - 3 integers
 	$stmt->execute();
 	$stmt->close();
-	$conn->close();
+
 	// Update session variable used for counting number of items in the shopping cart.
-	if (isset($_SESSION["NumCartItem"])){
-		$_SESSION["NumCartItem"] = $_SESSION["NumCartItem"] - 1;
-		if ($_SESSION["NumCartItem"]<1){
-			unset($_SESSION["NumCartItem"]);
+	$qry1 = "SELECT SUM(Quantity) AS 'NumCartItem' FROM shopcartitem WHERE ShopCartID = $cartid; ";
+	$count = $conn->query($qry1); //The result of the query
+	if ($count->num_rows > 0){ //Check if query returns any rows
+		while ($row = $count->fetch_array()){
+			$_SESSION["NumCartItem"] = $row["NumCartItem"];
+			}
 		}
-	}
+	$conn->close();
+	
 	header("Location: shoppingCart.php");
 	exit;
 }		

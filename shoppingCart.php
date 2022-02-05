@@ -95,8 +95,12 @@ if (isset($_SESSION["Cart"])) {
 		echo "<p style='text-align:right; font-size:20px; color:darkcyan; font-weight:bold;'>
 			Subtotal = S$". number_format($subTotal,2);
 			$_SESSION["SubTotal"] = round($subTotal,2) ;
-			$_SESSION['IsWaived']=false;
 
+			if($_SESSION['SubTotal'] > 50) { 
+				$_SESSION['IsWaived']=true;
+			} else {
+				$_SESSION['IsWaived']=false;
+			}
 			
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page

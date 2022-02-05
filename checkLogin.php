@@ -33,7 +33,7 @@ if(($email != "") && ($pwd != "")){
 					$_SESSION["Cart"] = $row["ShopCartID"];
 
 					$shopCartID = 	$_SESSION["Cart"];
-					$qry3 = "SELECT COUNT(*) AS 'NumCartItem' FROM shopcartitem WHERE ShopCartID ='$shopCartID'; ";
+					$qry3 = "SELECT SUM(Quantity) AS 'NumCartItem' FROM shopcartitem WHERE ShopCartID ='$shopCartID'; ";
 					$result3 = $conn->query($qry3); //The result of the query
 					if ($result3->num_rows > 0){ //Check if query returns any rows
 						while ($row = $result3->fetch_array()){
