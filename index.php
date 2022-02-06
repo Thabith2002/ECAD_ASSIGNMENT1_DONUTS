@@ -56,15 +56,9 @@ while ($row = $result->fetch_array()) {
                                    echo "</div>";
                                    
                                    echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
-<<<<<<< HEAD
                                              S$ $offerPrice</span>";
                                    echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:40%; border-radius:70px;' type='submit'>View Product</button></a>";
                                    //echo "<button onClick='$productLink' id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button>";
-=======
-                                             S$ $offerPrice</span>"; //Print product discounted price
-                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button></a>"; //Display button that links to specified donut
-                                   
->>>>>>> 1e9d106f30423811ac8eb6e45c8a213434035c78
                          echo "</div>";
                          echo "<img src='$img' width='200' class='ml-lg-5 order-1 order-lg-2'>";
                     echo "</div>";
