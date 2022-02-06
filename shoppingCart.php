@@ -94,8 +94,8 @@ if (isset($_SESSION["Cart"])) {
 		echo "<hr style='border: none; border-top: 1px solid black;'/>";
 		echo "<p style='text-align:right; font-size:20px; color:#380176; font-weight:bold;'>
 			Subtotal = S$". number_format($subTotal,2);
-			$_SESSION["SubTotal"] = round($subTotal,2) ;
-
+			$_SESSION["SubTotal"] = round($subTotal,2);
+			$_SESSION['DeliveryPrice'] = 2;
 			if($_SESSION['SubTotal'] > 50) { 
 				$_SESSION['IsWaived']=true;
 			} else {
