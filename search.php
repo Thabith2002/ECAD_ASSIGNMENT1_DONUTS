@@ -38,7 +38,7 @@ if (isset($_GET["keywords"]) && trim($_GET['keywords']) != "") {
 	
     $search = $_GET['keywords'];
 
-    $qry = "SELECT ProductID, ProductTitle FROM PRODUCT WHERE ProductTitle LIKE '%$search%' OR ProductDesc LIKE '%$search%' 
+    $qry = "SELECT * FROM PRODUCT WHERE ProductTitle LIKE '%$search%' OR ProductDesc LIKE '%$search%' 
     ORDER BY ProductTitle"; //The SQL Query
 
 	$result = $conn->query($qry); //The result of the query
@@ -47,8 +47,78 @@ if (isset($_GET["keywords"]) && trim($_GET['keywords']) != "") {
         echo "<h5 style='font-weight:bold; text-align:center;'> Search Results for $search: </h5>";
 
 		while ($row = $result->fetch_array()){
-            $product = "productDetails.php?pid=$row[ProductID]";
-            echo "<h6 style='text-align:center;'><a id='forgotPw' href=$product>$row[ProductTitle]</a></h6>";
+            //$product = "productDetails.php?pid=$row[ProductID]";
+            //echo "<h6 style='text-align:center;'><a id='forgotPw' href=$product>$row[ProductTitle]</a></h6>";
+
+            $productName = $row["ProductTitle"]; //Define product name for each donut
+            $productDesc = $row["ProductDesc"]; //Define product description for each donut
+            $productLink = "productDetails.php?pid=$row[ProductID]"; //Define the hyperlink to the product details page of the selected donut
+            $img = "./Images/Products/$row[ProductImage]"; //Define product image for each donut
+            $formattedPrice = number_format($row["Price"], 2); //Get price of donut and format it to 2 decimal places
+            $offerPrice = number_format($row["OfferedPrice"], 2); //Get discounted price of donuts on offer and format it to 2 decimal places
+            $discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100); //Calculcate discount percentage
+            $formattedDiscount = number_format($discountPercent, 0); //Format discounted percentage to 2 decimal places
+            $offer = $row["Offered"]; //Define whether the donut is on offer or not
+            $offerStart = $row["OfferStartDate"]; //Define start date of donut on offer
+            $offerEnd = $row["OfferEndDate"]; //Define end date of donut on offer
+            $todayDate = date("Y-m-d"); //Define current date to compare with offer time period
+
+            echo "<div class='row'>"; 
+               echo "<div class='col-lg-8 mx-auto'>";
+                    //List group
+                    echo "<ul class='list-group shadow'>";
+                    //<!-- list group item-->
+                    echo "<li class='list-group-item'>";
+                    //<!-- Custom content-->
+                    if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If searched product is on offer
+                    echo "<div class='media align-items-lg-center flex-column flex-lg-row p-3'>";
+                         echo "<div class='media-body order-2 order-lg-1'>";
+                              echo "<h5 class='mt-0 font-weight-bold mb-2'>$productName</h5>"; //Print product name
+                              echo "<button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' 
+                                    type='submit' disabled>On Offer</button>"; //Display 'on offer' for each donut on offer
+                              echo "<br>";
+                              echo "<p class='font-italic text-muted mb-0 small'>$productDesc</p>"; //Print product description
+                                    
+                                    echo "<div class='d-flex align-items-center justify-content-between mt-1'>";
+                                        echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
+                                             S$ $formattedPrice</span> <span style='color:#ffac47;'>$formattedDiscount% Off</span></p>"; //Print strikethrough original price and discounted price and discount %
+                                        
+                                    echo "</div>";
+                                   
+                                        echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
+                                                    S$ $offerPrice</span>"; //Print product discounted price
+                                        echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:darkcyan; width:50%; border-radius:70px;' 
+                                        type='submit'>View Product</button></a>"; //Display button that links to specified donut
+                                        
+                         echo "</div>";
+                         echo "<img src='$img' width='200' class='ml-lg-5 order-1 order-lg-2'>";
+                    echo "</div>";
+                    }
+                    else { //If searched product is not on offer
+                    echo "<div class='media align-items-lg-center flex-column flex-lg-row p-3'>";
+                        echo "<div class='media-body order-2 order-lg-1'>";
+                            echo "<h5 class='mt-0 font-weight-bold mb-2'>$productName</h5>"; //Print product name
+                            echo "<p class='font-italic text-muted mb-0 small'>$productDesc</p>"; //Print product description
+                                    echo "<div class='d-flex align-items-center justify-content-between mt-1'>";
+                                        echo "<p><span>
+                                             S$ $formattedPrice</span></p>"; 
+                                    echo "</div>";
+                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:darkcyan; width:50%; border-radius:70px;' 
+                                            type='submit'>View Product</button></a>"; //Display button that links to specified donut
+                                   
+                         echo "</div>";
+                         echo "<img src='$img' width='200' class='ml-lg-5 order-1 order-lg-2'>";
+                    echo "</div>";
+                    }
+                    
+                    //<!-- End -->
+                    echo "</li>";
+                    //<!-- End -->
+                    echo "</ul>";
+               //<!-- End -->
+               echo "</div>";
+          echo "</div>";
+
 		}
 		
 	}
