@@ -65,6 +65,9 @@ if (isset($_SESSION["Items"])) {
 
 	}
 
+	$_SESSION['DeliveryDate'] = $todaysDate->format('d/m/y');
+	$_SESSION['ShipDate'] = $todaysDate->format('Y-m-d');
+
 	echo "
 	<p style='font-weight:bold;'> Delivery Type </p>
 	<form action='cartFunctions.php' method='post'>
@@ -147,8 +150,7 @@ if (isset($_SESSION["Items"])) {
 	$_SESSION['TotalPaymentWGST'] = number_format($TotalPayment + $GST, 2);
 
 
-	$_SESSION['DeliveryDate'] = $todaysDate->format('d/m/y');
-	$_SESSION['ShipDate'] = $todaysDate->format('Y-m-d');
+	
 
 	if ($_SESSION['IsWaived']==true && $_SESSION['DeliveryMode']=='Normal'){
 		
