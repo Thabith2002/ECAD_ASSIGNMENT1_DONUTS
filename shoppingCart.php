@@ -92,7 +92,7 @@ if (isset($_SESSION["Cart"])) {
 		// To Do 4 (Practical 4): 
 		// Display the subtotal at the end of the shopping cart
 		echo "<hr style='border: none; border-top: 1px solid black;'/>";
-		echo "<p style='text-align:right; font-size:20px; color:darkcyan; font-weight:bold;'>
+		echo "<p style='text-align:right; font-size:20px; color:#380176; font-weight:bold;'>
 			Subtotal = S$". number_format($subTotal,2);
 			$_SESSION["SubTotal"] = round($subTotal,2) ;
 
@@ -104,7 +104,8 @@ if (isset($_SESSION["Cart"])) {
 			
 		// To Do 7 (Practical 5):
 		// Add PayPal Checkout button on the shopping cart page
-		echo "<p><a id='Ranking' href='checkOut.php' ><button>Check Out</button></a></p>";
+		echo "<p style='float:right'><a id='loginBtn' href=checkOut.php style=' text-align:center;'>Check Out</a></p>";
+
 	}
 	else {
 		echo "<h3 style='text-align:center; color:red;'>Empty shopping cart!</h3>";

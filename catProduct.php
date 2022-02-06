@@ -46,10 +46,10 @@ while ($row = $result->fetch_array()){
 	$discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
 	$formattedDiscount = number_format($discountPercent, 0);
 	echo "<div class='col-8'>";//67% of row width
-	echo "<p><a id='forgotPw' href=$product>$row[ProductTitle]</a></p>";
+	echo "<p><a style='font-size: x-large' id='forgotPw' href=$product>$row[ProductTitle]</a></p>";
 
 	if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If the offer time period is within range of today's date
-		echo "<button id='loginBtn' style='background:#ffac47; width:20%; border-radius:70px;' type='submit' disabled>On Offer</button>";
+		echo "<button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit' disabled>On Offer</button>";
 		echo "</br>";
 		echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
 		  S$ $formattedPrice</span> $formattedDiscount% Off</p>";
@@ -57,21 +57,22 @@ while ($row = $result->fetch_array()){
 		  S$ $offerPrice</span>";
 	}
 	else {
-		echo "<p>Price:<span style='font-weight:bold; color:red;'>
-		  S$ $formattedPrice</span>";
+		echo "<p  style='margin-bottom:60px;'>Price:<span style='font-weight:bold; color:red;'>
+		  S$ $formattedPrice</span></p>";
 	}
 
 
-	echo "<p><a id='Ranking' href=$productRanking ><button>View Ranking</button></a></p>";
+	echo "<p><a id='loginBtn' href=$productRanking style='width:40%; text-align:center;'>View Ranking</a></p>";
 	echo "</div>";
 
 	//Right Column - display the product's image
 	$img = "./Images/products/$row[ProductImage]";
 	echo "<div class='col-4'>"; //33% of the row width
-	echo "<img src='$img' />";
+	echo "<a  href=$product><img src='$img' /></a>";
 	echo "</div>";
 	
 	echo "</div>";
+	echo "<hr/ style='height:3px; background:purple;'>";
 }
 // To Do:  Ending ....
 

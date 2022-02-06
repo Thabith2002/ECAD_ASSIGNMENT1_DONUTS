@@ -4,10 +4,10 @@ session_start();
 // Include the Page Layout header
 include("header.php"); 
 ?>
-<img src="Images/welcome2mamaya.jpg" class="img-fluid" 
-     style="display:block; margin:auto;"/>
-     <div class="container py-5">
-     </div>
+
+<img src='Images/DONUTTED.jpg' class='img-fluid'
+          style='display:block; margin:auto; width:100%;'/>
+     
 
 <?php 
 // Include the PHP file that establishes database connection handle: $conn
@@ -56,7 +56,7 @@ while ($row = $result->fetch_array()) {
                                    
                                    echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
                                              S$ $offerPrice</span>";
-                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button></a>";
+                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:40%; border-radius:70px;' type='submit'>View Product</button></a>";
                                    //echo "<button onClick='$productLink' id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button>";
                          echo "</div>";
                          echo "<img src='$img' width='200' class='ml-lg-5 order-1 order-lg-2'>";
@@ -71,6 +71,7 @@ while ($row = $result->fetch_array()) {
           echo "</div>";
     }
 }
+
 // Include the Page Layout footer
 include("footer.php"); 
 ?>

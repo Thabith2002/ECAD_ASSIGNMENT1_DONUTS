@@ -9,28 +9,31 @@ body {
 
 .cart-header {
 	/*background-color: #0040FF;*/
-	background-color: #017CA7;
+	background-color: darkorchid;
 	color: white;
 }
 
 .bg-custom {
-	background-color:darkcyan;
+	background-color:#dc9afe;
 }
 
 input, textarea {
-	color:darkcyan !important;
+	color:#380176 !important;
 }
 
 input:focus, input:hover, textarea:focus, textarea:hover{
-	background-color: rgb(218, 246, 255) !important;
+	background-color: rgb(255, 236, 252) !important;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    color: brown;
+}
 
 
 #loginBtn{
 	width: 100%;
 	display: block;
-	background-color: darkcyan;
+	background-color: purple;
 	color: white;
 	font-weight: bold;
 	border: 0;
@@ -42,7 +45,7 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 }
 
 #loginBtn:hover{
-	background-color:darkturquoise;
+	background-color:palevioletred;
 	transition: background-color 0.25s;
 }
 
@@ -61,11 +64,17 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 	border-radius: 0.25rem 0 0 0.25rem !important;
 }
 
+#card:hover{
+	background-color: lightpink;
+	transition: background-color 0.25s;
+
+}
+
 #searchBtn{
 	height: calc(1.5em + 0.75rem + 5px);
 	width: 100%;
 	display: block;
-	background-color: darkcyan;
+	background-color: #380176;
 	color: white;
 	font-weight: bold;
 	border: 0;
@@ -78,7 +87,7 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 }
 
 #searchBtn:hover{
-	background-color:darkturquoise;
+	background-color:palevioletred;
 	transition: background-color 0.25s;
 }
 
@@ -92,7 +101,6 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 		height: calc(1.5em + 0.75rem + 5px);
 		width: 100%;
 		display: block;
-		background-color: darkcyan;
 		color: white;
 		font-weight: bold;
 		border: 0;
@@ -113,7 +121,7 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 
 #forgotPw{
 	text-decoration:none;
-	color: darkcyan;
+	color: #380176;
 	font-weight: bold;
 	border: 0;
 	margin-top: 10px;
@@ -123,7 +131,7 @@ input:focus, input:hover, textarea:focus, textarea:hover{
 }
 
 #forgotPw:hover{
-	color:darkturquoise;
+	color:palevioletred;
 	transition: color 0.25s;
 }
 

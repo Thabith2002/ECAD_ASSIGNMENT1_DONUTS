@@ -41,7 +41,7 @@ while ($row = $result->fetch_array()){
 
     //Left column - display a product's specifications,
     echo "<div class='col-sm-9' style='padding:5px' >";
-    echo "<p>$row[ProductDesc]</p>";
+    echo "<p style='font-size: large;'>$row[ProductDesc]</p>";
 
     //Left column - display a product's specifications,
     $qry2 = "SELECT s.SpecName, ps.SpecVal from productspec ps

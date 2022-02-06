@@ -28,7 +28,7 @@ if(isset($_SESSION["ShopperName"])) {
      Display a navbar which is visible before or after collapsing -->
     <nav class="navbar navbar-expand-md navbar-dark bg-custom">
         <!-- Dynamic Text Display -->
-        <span class="navbar-text ml-md-2" style="color:#F7BE81; max-width: 80%;">
+        <span class="navbar-text ml-md-2" style="color:black; max-width: 80%; font-size: 18px;">
             <?php echo $content1; ?>
         </span>
         <!-- Toggler/Collapsible Button  -->

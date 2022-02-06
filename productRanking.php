@@ -39,7 +39,7 @@ while ($row = $result->fetch_array()){
 
     //Left column - display a product's specifications,
     echo "<div class='col-sm-9' style='padding:5px' >";
-    echo "<p>$row[ProductDesc]</p>";
+    echo "<p style='font-size: large;'>$row[ProductDesc]</p>";
 
     //Left column - display a product's specifications,
     $qry = "SELECT s.SpecName, ps.SpecVal from productspec ps
@@ -71,7 +71,7 @@ while ($row = $result->fetch_array()){
         }
 
     }else{
-        echo"<p><strong>No Ratings Given yet!</strong></p>";
+        echo"<p style='color:red'><strong>No Ratings Given yet!</strong></p>";
     }
 
     echo "</div>"; // End of Left Column
@@ -91,7 +91,7 @@ while ($row = $result->fetch_array()){
 
 
 $giveRanking = "giveRanking.php?pid=$pid";
-echo "<p><a id='Ranking' href=$giveRanking ><button>Give Ranking</button></p>";
+echo "<p><a id='loginBtn' href=$giveRanking style='width:60%; text-align:center;'>Give Ranking</a></p>";
 
 echo "</div>"; // End of right column
 if($ranking_result->num_rows > 0) {

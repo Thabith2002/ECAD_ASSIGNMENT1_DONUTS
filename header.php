@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Mamaya e-BookStore</title>
+        <title>Donutted</title>
         <!-- Latest compiled and minified CSS --->
         <link rel="stylesheet" href="css/bootstrap.min.css"> 
         <!-- jQuery library -->
@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <a href="index.php">
-                        <img src="Images/mamayaebooks.jpg" alt="Logo" 
+                        <img src="Images/DonuttedBanner.jpg" alt="Logo" 
                         class="img-fluid" style="width: 100%"/></a>
                 </div>
             </div>

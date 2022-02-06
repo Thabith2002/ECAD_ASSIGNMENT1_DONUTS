@@ -5,8 +5,8 @@
             <div class="col-sm-12" style="text-align: right;">
                 <hr />
                 Do you need help? Please email to:
-                <a href="mailto:mamaya@np.edu.sg">mamaya@np.edu.sg</a>
-                <p style="font-size:12px">&copy;Copyright by Mamaya Group</p>
+                <a href="mailto:donutted@gmail.com">donutted@gmail.com</a>
+                <p style="font-size:12px">&copy;Copyright by Donutted Group</p>
             </div>
         </div>
     </div> <!-- Close the bootstrap container -->

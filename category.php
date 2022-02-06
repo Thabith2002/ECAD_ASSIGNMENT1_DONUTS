@@ -22,23 +22,23 @@ $result = $conn->query($qry);
 
 //Display Category in each row
 while ($row = $result->fetch_array()) {
-    echo "<div class='row' style='padding:5px'>"; // Start a new row
-
-    //Left column - display a text link showing the category's name,
-    //              display category's description in a new paragraph
     $catname = urlencode($row["CatName"]);
     $catproduct = "catProduct.php?cid=$row[CategoryID]&catName=$catname";
-    echo "<div class='col-8'>"; //67% of row width
-    echo "<p><a id='forgotPw' href=$catproduct>$row[CatName]s</a></p>";
-    echo "$row[CatDesc]";
-    echo "</div>";
+    echo "<div class='main-container' style='padding:5px'>"; // Start a new row
 
-    //Right Column - display the category's image
     $img = "./Images/category/$row[CatImage]";
-    echo "<div class='col-4'>";//33% of row-width
-    echo "<img src='$img' />";
-    echo "</div>";
-    echo "</div>";
+   
+
+
+    echo"<div class='card' id='card'>
+        <a class='btn' href=$catproduct>
+            <div class='container-fluid;'>
+               <p style='font-weight: bold; color: purple;'>$row[CatName]s</p>
+               <p>$row[CatDesc]</p>
+                <img id='student' src='$img' class='img-fluid' />
+            </div>
+        </a>
+    </div>";
 }
 
 
