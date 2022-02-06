@@ -30,7 +30,7 @@ while ($row = $result->fetch_array()){
 	$offerEnd = $row["OfferEndDate"];
 	$todayDate = date("Y-m-d");
     if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If the offer time period is within range of today's date
-		echo "<button id='loginBtn' style='background:#ffac47; width:10%; border-radius:70px;' disabled>On Offer</button>";
+		echo "<button id='loginBtn' style='background:#ffac47; width:10%; border-radius:70px;' disabled>On Offer</button>"; //Display 'on offer' sign
 		echo "</br>";
     }
 
@@ -73,15 +73,15 @@ while ($row = $result->fetch_array()){
 	$discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
     $formattedDiscount = number_format($discountPercent, 0);
 
-    if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) {
+    if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If current date is within offer date period for donuts on offer
     echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
-		  S$ $formattedPrice</span> $formattedDiscount% Off</p>";
+		  S$ $formattedPrice</span> $formattedDiscount% Off</p>"; //Display original price and strike it, followed by the discount percentage
     echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
-    S$ $offerPrice</span>";
+    S$ $offerPrice</span>"; //Display discounted price in larger font
     }
-    else {
+    else { //If donut is not on offer or within offer date period
 		echo "<p>Price:<span style='font-weight:bold; color:red;'>
-		  S$ $formattedPrice</span>";
+		  S$ $formattedPrice</span>"; //Display original price
 	}
     
     echo "<form action='cartFunctions.php' method='post'>";
@@ -92,12 +92,12 @@ while ($row = $result->fetch_array()){
     $quantity = $row["Quantity"];
     $name = $row["ProductTitle"];
     //check for sufficient quantity
-    if($quantity <= 0){
-        echo "<button id='loginBtn' style='background:red;' type='submit' disabled>Add to Cart</button>";
-        echo "<p style='color:red; font-weight: bold;'>$name is currently out of stock!<br />";
+    if($quantity <= 0){ //If the donut is out of stock
+        echo "<button id='loginBtn' style='background:red;' type='submit' disabled>Add to Cart</button>"; //Disable add to cart button and change button to red
+        echo "<p style='color:red; font-weight: bold;'>$name is currently out of stock!<br />"; //Let shopper know that the donut is OOS
     }
-    else {
-        echo "<button id='loginBtn' type='submit'>Add to Cart</button>";
+    else { //If donut is in stock
+        echo "<button id='loginBtn' type='submit'>Add to Cart</button>"; //Display normal add to cart button
     }
     
     echo "</form>";

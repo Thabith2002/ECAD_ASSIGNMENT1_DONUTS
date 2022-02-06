@@ -14,10 +14,10 @@ include("header.php");
 include_once("mysql_conn.php");
 
 // Display Products on Offer
-echo "<hr>";
-echo "<p style='color:red; text-align:center;' class='page-title'>Donuts on Offer!</p>";
-$qry = "SELECT * FROM product"; // Retrieve Product
-$stmt = $conn->prepare($qry); 	// "i" - integer 
+echo "<hr>"; //Horizontal line to separate welcome message and products on offer
+echo "<p style='color:red; text-align:center;' class='page-title'>Donuts on Offer!</p>"; //Products on offer Title
+$qry = "SELECT * FROM product"; // Retrieve all Product details
+$stmt = $conn->prepare($qry);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
@@ -25,20 +25,21 @@ $stmt->close();
 while ($row = $result->fetch_array()) {
 
 
-     $productName = $row["ProductTitle"];
-     $productDesc = $row["ProductDesc"];
-     $productLink = "productDetails.php?pid=$row[ProductID]";
-     $img = "./Images/Products/$row[ProductImage]";
-     $formattedPrice = number_format($row["Price"], 2);
-	$offerPrice = number_format($row["OfferedPrice"], 2);
-     $discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
-     $formattedDiscount = number_format($discountPercent, 0);
-     $offer = $row["Offered"];
-     $offerStart = $row["OfferStartDate"];
-     $offerEnd = $row["OfferEndDate"];
-     $todayDate = date("Y-m-d");
-     if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If the offer time period is within range of today's date
-          echo "<div class='row'>";
+     $productName = $row["ProductTitle"]; //Define product name for each donut
+     $productDesc = $row["ProductDesc"]; //Define product description for each donut
+     $productLink = "productDetails.php?pid=$row[ProductID]"; //Define the hyperlink to the product details page of the selected donut
+     $img = "./Images/Products/$row[ProductImage]"; //Define product image for each donut
+     $formattedPrice = number_format($row["Price"], 2); //Get price of donut and format it to 2 decimal places
+	$offerPrice = number_format($row["OfferedPrice"], 2); //Get discounted price of donuts on offer and format it to 2 decimal places
+     $discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100); //Calculcate discount percentage
+     $formattedDiscount = number_format($discountPercent, 0); //Format discounted percentage to 2 decimal places
+     $offer = $row["Offered"]; //Define whether the donut is on offer or not
+     $offerStart = $row["OfferStartDate"]; //Define start date of donut on offer
+     $offerEnd = $row["OfferEndDate"]; //Define end date of donut on offer
+     $todayDate = date("Y-m-d"); //Define current date to compare with offer time period
+     if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) { //If the offer time period is within range of today's date, and donut is on offer
+          //Display donuts that are on offer
+          echo "<div class='row'>"; 
                echo "<div class='col-lg-8 mx-auto'>";
                     //List group
                     echo "<ul class='list-group shadow'>";
@@ -47,17 +48,17 @@ while ($row = $result->fetch_array()) {
                     //<!-- Custom content-->
                     echo "<div class='media align-items-lg-center flex-column flex-lg-row p-3'>";
                          echo "<div class='media-body order-2 order-lg-1'>";
-                              echo "<h5 class='mt-0 font-weight-bold mb-2'>$productName</h5>";
-                              echo "<p class='font-italic text-muted mb-0 small'>$productDesc</p>";
+                              echo "<h5 class='mt-0 font-weight-bold mb-2'>$productName</h5>"; //Print product name
+                              echo "<p class='font-italic text-muted mb-0 small'>$productDesc</p>"; //Print product description
                                    echo "<div class='d-flex align-items-center justify-content-between mt-1'>";
                                         echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
-                                             S$ $formattedPrice</span> <span style='color:#ffac47;'>$formattedDiscount% Off</span></p>";
+                                             S$ $formattedPrice</span> <span style='color:#ffac47;'>$formattedDiscount% Off</span></p>"; //Print strikethrough original price and discounted price and discount %
                                    echo "</div>";
                                    
                                    echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
-                                             S$ $offerPrice</span>";
-                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button></a>";
-                                   //echo "<button onClick='$productLink' id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button>";
+                                             S$ $offerPrice</span>"; //Print product discounted price
+                                   echo "<a id='Ranking' href=$productLink><button id='loginBtn' style='background:#ffac47; width:30%; border-radius:70px;' type='submit'>View Product</button></a>"; //Display button that links to specified donut
+                                   
                          echo "</div>";
                          echo "<img src='$img' width='200' class='ml-lg-5 order-1 order-lg-2'>";
                     echo "</div>";

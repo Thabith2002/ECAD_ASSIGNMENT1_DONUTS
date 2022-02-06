@@ -29,7 +29,7 @@ while ($row = $result->fetch_array()) {
     $catname = urlencode($row["CatName"]);
     $catproduct = "catProduct.php?cid=$row[CategoryID]&catName=$catname";
     echo "<div class='col-8'>"; //67% of row width
-    echo "<p><a id='forgotPw' href=$catproduct>$row[CatName]s</a></p>";
+    echo "<p><a id='forgotPw' href=$catproduct>$row[CatName]s</a></p>"; //Display product category names
     echo "$row[CatDesc]";
     echo "</div>";
 
