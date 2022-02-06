@@ -32,7 +32,7 @@ if (! isset($_SESSION["SecurityQns"])) { // Check if there is security question
     
                     <div class="form-group row">       
                         <div class="col-sm-9 offset-sm-3">
-                            <button id="loginBtn" type="submit">Update Profile</button>
+                            <button id="loginBtn" type="submit">Submit</button>
                         </div>
                     </div>
                 </form>
