@@ -38,10 +38,9 @@ while ($row = $result->fetch_array()) {
     echo "<div class='col-4'>";//33% of row-width
     echo "<img src='$img' />";
     echo "</div>";
-
     echo "</div>";
 }
-// To Do:  Ending ....
+
 
 $conn->close(); // Close database connnection
 echo "</div>"; // End of container

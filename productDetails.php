@@ -71,10 +71,11 @@ while ($row = $result->fetch_array()){
 	$offerEnd = $row["OfferEndDate"];
 	$todayDate = date("Y-m-d");
 	$discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
+    $formattedDiscount = number_format($discountPercent, 0);
 
     if ($offer == '1' && $offerStart < $todayDate && $offerEnd > $todayDate) {
     echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
-		  S$ $formattedPrice</span> $discountPercent% Off</p>";
+		  S$ $formattedPrice</span> $formattedDiscount% Off</p>";
     echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
     S$ $offerPrice</span>";
     }

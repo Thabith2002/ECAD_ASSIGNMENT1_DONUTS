@@ -44,6 +44,7 @@ while ($row = $result->fetch_array()){
 	$offerEnd = $row["OfferEndDate"];
 	$todayDate = date("Y-m-d");
 	$discountPercent = (($row["Price"] - $row["OfferedPrice"]) / $row["Price"] * 100);
+	$formattedDiscount = number_format($discountPercent, 0);
 	echo "<div class='col-8'>";//67% of row width
 	echo "<p><a id='forgotPw' href=$product>$row[ProductTitle]</a></p>";
 
@@ -51,7 +52,7 @@ while ($row = $result->fetch_array()){
 		echo "<button id='loginBtn' style='background:#ffac47; width:20%; border-radius:70px;' type='submit' disabled>On Offer</button>";
 		echo "</br>";
 		echo "<p><span style='font-weight:bold; color:lightgrey; font-weight:normal; text-decoration: line-through;'>
-		  S$ $formattedPrice</span> $discountPercent% Off</p>";
+		  S$ $formattedPrice</span> $formattedDiscount% Off</p>";
 		echo "<p><span style='font-weight:bold; font-size: 18px; color:red;'>Discounted Price:
 		  S$ $offerPrice</span>";
 	}
